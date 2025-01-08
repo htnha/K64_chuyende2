@@ -10,23 +10,29 @@ students = {
 }
 
 
+# Escape special characters for MarkdownV2
+def escape_markdown(text: str) -> str:
+    special_chars = r"_*[]()~`>#+-=|{}.!\\"
+    return "".join(f"\\{char}" if char in special_chars else char for char in text)
+
+# Start Command with Help Instructions
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    help_message = """
-🤖 **Welcome to the Student Info Bot!**
+    help_message = escape_markdown("""
+🤖 *Welcome to the Student Info Bot!*
 
 You can interact with the following commands:
 
-/start - Display this help message.
-/student <name> - Get details about a specific student. Example: `/student Dung`
-/list_students - List all available students.
+/start \\- Display this help message.
+/student <name> \\- Get details about a specific student. Example: `/student Dung`
+/list_students \\- List all available students.
 
-🔍 **Example Usage:**
+🔍 *Example Usage:*
 - `/student Dung`
 - `/student An`
 
 Type a command to begin!
-"""
-    await update.message.reply_text(help_message, parse_mode="Markdown")
+""")
+    await update.message.reply_text(help_message, parse_mode="MarkdownV2")
 
 
 async def student(update: Update, context: ContextTypes.DEFAULT_TYPE):

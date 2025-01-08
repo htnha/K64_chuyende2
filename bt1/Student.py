@@ -7,3 +7,6 @@ class Student:
 
     def address(self):
         raise NotImplementedError("Subclass must implement abstract method")
+
+    def telegram_id(self):
+        raise NotImplementedError("Subclass must implement abstract method")
