@@ -8,4 +8,4 @@ class Long(Student):
     def address(self):
         return "Dong Hoi-Quang Binh"
     def telegram_id(self):
-        return "7719282102"
+        return "8133457378"
