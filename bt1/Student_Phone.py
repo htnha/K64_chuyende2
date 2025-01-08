@@ -7,3 +7,8 @@ class Phone(Student):
         return "Toi len la: Phone \nEmail: tradtrarist@gmail.com"
     def address(self):
         return "DH city"
+    def address(self):
+        return "DH Quarng Binh - LAO"
+    def telegram_id(self):
+        return "0987434116"
+    
