@@ -2,7 +2,7 @@ from Student import Student
 
 class Thanakone(Student):
     def name(self):
-        return "THANAKONE"
+        return "Thanakone"
     def speak(self):
         return "Toi Ten la: THANAKONE.\nGmail: thanakone7536@gmail.com"
     def address(self):
