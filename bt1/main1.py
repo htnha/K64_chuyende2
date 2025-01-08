@@ -15,4 +15,4 @@ for student in k64_class:
         print(student.speak())
         print(student.address())
     except NotImplementedError as e:
-        print(f"Co loi cho sinh vien: {type(student).__name__} - {e}")
+        print(f"Co loi cho sinh vien: {type(student).__name__}")
