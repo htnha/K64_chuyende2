@@ -6,4 +6,4 @@ class Tham(Student):
     def speak(self):
         return "Toi len la: Tham \nEmail: nguyenvantham.vtabd@gmail.com"
     def address(self):
-        return "Quang Trach country"
+        return "Quang Trach - Quang Binh"
