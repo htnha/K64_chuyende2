@@ -3,12 +3,18 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from student_Dung import Dung
 from student_Long import Long
 from student_Ekalat import Ekalat
+from student_Linh import Linh
+from student_Dat import Dat
+from student_thanakone import Thanakone
 
 # Create instances of students
 students = {
     "Dung": Dung(),
     "Long": Long(),
-    "Ekalat": Ekalat()
+    "Ekalat": Ekalat(),
+    "Dat": Dat(),
+    "Linh": Linh(),
+    "Thanakone": Thanakone()
 }
 
 
