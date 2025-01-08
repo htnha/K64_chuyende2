@@ -1,6 +1,6 @@
 from Student import Student
 
-class Long(Student):
+class Phong(Student):
     def name(self):
         return "Do Nguyen Phong"
     def speak(self):
