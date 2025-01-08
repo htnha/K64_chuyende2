@@ -8,4 +8,4 @@ class Thanakone(Student):
     def address(self):
         return "Savannakhet - Laos"
     def telegram_id(self):
-        return "888746846"
+        return "6836821198"
