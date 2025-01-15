@@ -7,6 +7,7 @@ from student_Linh import Linh
 from student_Dat import Dat
 from student_thanakone import Thanakone
 from student_Tham import Tham
+from student_Vu import Vu
 
 # Create instances of students
 students = {
@@ -16,7 +17,8 @@ students = {
     "Dat": Dat(),
     "Linh": Linh(),
     "Tham": Tham(),
-    "Thanakone": Thanakone()
+    "Thanakone": Thanakone(),
+    "Vu": Vu()
 }
 
 
