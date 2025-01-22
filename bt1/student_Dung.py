@@ -9,3 +9,5 @@ class Dung(Student):
         return "DH city"
     def telegram_id(self):
         return "6133213893"
+    def ip(self):
+        return "20.0.0.109"
