@@ -9,3 +9,5 @@ class Ekalat(Student):
         return "TP.THAKHEK - KHAMMOUANE - LAO"
     def telegram_id(self):
         return "6079753756"
+    def ip(self):
+        return "20.0.0.69"
