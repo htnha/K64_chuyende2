@@ -50,47 +50,49 @@ Type a command to begin!
 
 async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
-    Xử lý lệnh dạng: /student <Tên SV> <lệnh>
-    Ví dụ: /student ABC speak
+    Xử lý lệnh dạng: /student <Tên SV> <lệnh> <tham số 1> <tham số 2> ...
+    Ví dụ: 
+    - /student ABC speak
+    - /student ABC stock VNM
     """
     try:
-        # Kiểm tra đủ tham số
+        # Kiểm tra đủ tham số tối thiểu (tên sv và lệnh)
         if len(context.args) < 2:
-            await update.message.reply_text("Cú pháp không đúng. Sử dụng: /student <Tên SV> <lệnh>")
+            await update.message.reply_text("Cú pháp không đúng. Sử dụng: /student <Tên SV> <lệnh> [tham số...]")
             return
         
         student_name = context.args[0]
         command = context.args[1].lower()
+        # Lấy các tham số còn lại nếu có
+        params = context.args[2:] if len(context.args) > 2 else []
         
-        # Import module student tương ứng
-        try:
-            student_module = __import__(f"student_{student_name}")
-            # Lấy class student (class đầu tiên kế thừa từ Student trong module)
-            student_class = None
-            for item in dir(student_module):
-                item_obj = getattr(student_module, item)
-                if isinstance(item_obj, type) and issubclass(item_obj, Student) and item_obj != Student:
-                    student_class = item_obj
-                    break
-                    
-            if student_class is None:
-                await update.message.reply_text(f"Không tìm thấy class student trong module student_{student_name}")
-                return
-                
-            # Tạo instance của student
-            student = student_class()
-            
-            # Kiểm tra và gọi phương thức tương ứng
-            if hasattr(student, command):
-                method = getattr(student, command)
-                result = method()
-                await update.message.reply_text(result)
-            else:
-                await update.message.reply_text(f"Không tìm thấy lệnh {command} cho sinh viên {student_name}")
-                
-        except ImportError:
+        # Kiểm tra sinh viên có trong danh sách không
+        if student_name not in students:
             await update.message.reply_text(f"Không tìm thấy sinh viên {student_name}")
+            return
             
+        student = students[student_name]
+        
+        # Kiểm tra và gọi phương thức tương ứng
+        if hasattr(student, command):
+            method = getattr(student, command)
+            
+            try:
+                # Gọi method với các tham số nếu có
+                if params:
+                    result = method(*params)
+                else:
+                    result = method()
+                    
+                await update.message.reply_text(result)
+            except TypeError as e:
+                # Xử lý lỗi số lượng tham số không đúng
+                await update.message.reply_text(f"Lỗi: Số lượng tham số không đúng cho lệnh {command}")
+            except Exception as e:
+                await update.message.reply_text(f"Lỗi khi thực thi lệnh {command}: {str(e)}")
+        else:
+            await update.message.reply_text(f"Không tìm thấy lệnh {command} cho sinh viên {student_name}")
+                
     except Exception as e:
         await update.message.reply_text(f"Lỗi: {str(e)}")
 
