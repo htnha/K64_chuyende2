@@ -2,7 +2,7 @@ import socket
 import json
 
 # Cấu hình server
-HOST = '117.0.110.242'  # Địa chỉ server
+HOST = '171.224.193.81'  # Địa chỉ server
 PORT = 99               # Cổng server
 
 def send_request(stock_code):
@@ -25,6 +25,7 @@ def send_request(stock_code):
             else:
                 print(f"Mã chứng khoán: {response_data['stock_code']}")
                 print(f"Giá tham chiếu: {response_data['tc_price']}")
+                return response_data['tc_price']
         except json.JSONDecodeError:
             print(f"Phản hồi không hợp lệ từ server: {response}")
     except ConnectionRefusedError:
