@@ -10,7 +10,7 @@ from student_thanakone import Thanakone
 from student_Tham import Tham
 from student_Vu import Vu
 
-# Create instances of students
+# Create instances of studentsI
 students = {
     "Dung": Dung(),
     "Long": Long(),

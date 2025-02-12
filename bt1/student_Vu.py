@@ -11,3 +11,5 @@ class Vu(Student):
         return "8133457378"
     def ip(self):
         return "20.0.0.23"
+    
+
