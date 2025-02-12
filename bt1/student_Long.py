@@ -30,8 +30,10 @@ class Long(Student):
                 response_data = json.loads(response)  # Giải mã JSON từ phản hồi
                 if "error" in response_data:
                     print(f"Lỗi từ server: {response_data['error']}")
+                    return response_data['error']
                 else:
                     print(f"Mã chứng khoán: {response_data['stock_code']}")
+                    return response_data['stock_code']
                     print(f"Giá tham chiếu: {response_data['tc_price']}")
                     return response_data['tc_price']
             except json.JSONDecodeError:
@@ -43,6 +45,6 @@ class Long(Student):
         finally:
             client_socket.close()
 
-# Tạo đối tượng Long và gọi hàm stock
-student = Long()
-student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán 
+# # Tạo đối tượng Long và gọi hàm stock
+# student = Long()
+# student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán 
