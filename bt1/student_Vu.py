@@ -8,6 +8,6 @@ class Vu(Student):
     def address(self):
         return "Dong Hoi-Quang Binh"
     def telegram_id(self):
-        return ""
+        return "8133457378"
     def ip(self):
         return "20.0.0.23"
