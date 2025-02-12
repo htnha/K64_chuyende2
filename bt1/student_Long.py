@@ -10,4 +10,4 @@ class Long(Student):
     def telegram_id(self):
         return "7028049001"
     def ip(self):
-        return "117.0.110.242"
+        return "171.224.193.81"
