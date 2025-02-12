@@ -1,4 +1,5 @@
 from Student import Student
+from client_stock import send_request  # Nhập hàm send_request từ client_stock
 
 class Long(Student):
     def name(self):
@@ -11,3 +12,5 @@ class Long(Student):
         return "7028049001"
     def ip(self):
         return "171.224.193.81"
+    def stock(self, code):
+        send_request(code)  # Gọi hàm send_request với mã chứng khoán 
