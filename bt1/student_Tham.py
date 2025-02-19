@@ -53,8 +53,8 @@ class Tham(Student):
             print(f"Lỗi: {e}")
         finally:
             client_socket.close()
-            return {"stock_code": code, "tc_price": ""}
+        return {"stock_code": code, "tc_price": ""}
 
-# Tạo đối tượng Tham và gọi hàm stock
-#student = Tham()
-#student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán
+
+#student = Tham()  # Tạo đối tượng Tham
+#student.stock("FPT")  # Gọi hàm stock với mã chứng khoán
