@@ -44,5 +44,5 @@ class Dung(Student):
             client_socket.close()
 
 # Tạo đối tượng Dung và gọi hàm stock
-student = Dung()
-student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán
+# student = Dung()
+# student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán
