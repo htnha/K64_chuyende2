@@ -45,5 +45,5 @@ class Long(Student):
             client_socket.close()
 
  # Tạo đối tượng Long và gọi hàm stock
-student = Long()
-student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán 
+# student = Long()
+# student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán 
