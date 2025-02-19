@@ -12,7 +12,7 @@ class Long(Student):
     def telegram_id(self):
         return "7028049001"
     def ip(self):
-        return "171.224.193.81"
+        return "171.223.21.220"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
@@ -33,7 +33,6 @@ class Long(Student):
                     return response_data['error']
                 else:
                     print(f"Mã chứng khoán: {response_data['stock_code']}")
-                    return response_data['stock_code']
                     print(f"Giá tham chiếu: {response_data['tc_price']}")
                     return response_data['tc_price']
             except json.JSONDecodeError:
