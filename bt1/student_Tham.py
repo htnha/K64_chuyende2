@@ -58,5 +58,5 @@ class Tham(Student):
             client_socket.close()
 
 
-student = Tham()  # Tạo đối tượng Tham
-student.stock("FPT")  # Gọi hàm stock với mã chứng khoán
+#student = Tham()  # Tạo đối tượng Tham
+#student.stock("FPT")  # Gọi hàm stock với mã chứng khoán
