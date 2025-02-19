@@ -19,7 +19,7 @@ class Tham(Student):
     def ip(self):
         return "20.0.0.237"
 
-    def stock(self, code: str):
+    def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -53,7 +53,6 @@ class Tham(Student):
             print(f"Lỗi: {e}")
         finally:
             client_socket.close()
-        return {"stock_code": code, "tc_price": ""}
 
 
 #student = Tham()  # Tạo đối tượng Tham
