@@ -55,16 +55,22 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
     - /student Long speak
     - /student Long stock FPT
     """
+    print(f"Received command: {context.args}")
     try:
         # Kiểm tra đủ tham số tối thiểu (tên sv và lệnh)
-        if len(context.args) < 2:
+        if len(context.args) < 3:
             await update.message.reply_text("Cú pháp không đúng. Sử dụng: /student <Tên SV> <lệnh> [tham số...]")
             return
-        
+
         student_name = context.args[0]
         command = context.args[1].lower()
         # Lấy các tham số còn lại nếu có
         params = context.args[2:] if len(context.args) > 2 else []
+
+        # Kiểm tra nếu lệnh là 'stock' nhưng không có mã chứng khoán
+        if command == "stock" and len(params) < 1:
+            await update.message.reply_text("Cú pháp không đúng. Sử dụng: /student <Tên SV> stock <mã_chứng_khoán>")
+            return
         
         # Kiểm tra sinh viên có trong danh sách không
         if student_name not in students:
@@ -92,7 +98,8 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
                 await update.message.reply_text(f"Lỗi khi thực thi lệnh {command}: {str(e)}")
         else:
             await update.message.reply_text(f"Không tìm thấy lệnh {command} cho sinh viên {student_name}")
-                
+
+
     except Exception as e:
         await update.message.reply_text(f"Lỗi: {str(e)}")
 
@@ -155,4 +162,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+    
