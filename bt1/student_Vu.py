@@ -1,5 +1,6 @@
 from Student import Student
-
+import socket  
+import json 
 class Vu(Student):
     def name(self):
         return "Vu"
