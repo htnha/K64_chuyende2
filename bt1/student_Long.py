@@ -12,7 +12,7 @@ class Long(Student):
     def telegram_id(self):
         return "7028049001"
     def ip(self):
-        return "171.233.21.220"
+        return "171.224.194.141"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
