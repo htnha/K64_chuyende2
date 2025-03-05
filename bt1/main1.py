@@ -65,8 +65,8 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
 
         student_name = context.args[0]
         command = context.args[1].lower()
-        params = context.args[2:] if len(context.args) > 2 else []
-        
+        rest = context.args[2:] if len(context.args) > 2 else []
+        params = [' '.join(rest),]
         # Kiểm tra sinh viên có trong danh sách không
         if student_name not in students:
             await update.message.reply_text(f"Không tìm thấy sinh viên {student_name}")
@@ -90,9 +90,9 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
                     # Gọi method với các tham số nếu có
                     if params:
                         result = method(*params)
+                        print('params', params)
                     else:
                         result = method()
-                
                 # Nếu trả về dict, định dạng lại tin nhắn
                 if isinstance(result, dict):
                     message = f"Mã chứng khoán: {result['stock_code']}\nGiá tham chiếu: {result['tc_price']}"
