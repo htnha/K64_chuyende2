@@ -52,7 +52,7 @@ class Tham(Student):
             client_socket.close()
         return {"stock_code": code, "tc_price": ""}
 
-    def weather(self):
+    def weather(self, city):
         API_KEY = "83e847ddd998ae0b2d451f688f791fa9"  # Thay bằng API Key từ OpenWeatherMap
         CITY = "Dong Hoi, VN"
         URL = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric&lang=vi"
@@ -76,4 +76,4 @@ class Tham(Student):
 
 # Test phương thức weather()
 #student = Tham()
-#print(student.weather())
+#print(student.weather("Dong Hoi, VN"))
