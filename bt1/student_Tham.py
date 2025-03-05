@@ -1,7 +1,7 @@
-from Student import Student
+import requests
 import socket
 import json
-
+from Student import Student
 
 class Tham(Student):
     def name(self):
@@ -21,19 +21,16 @@ class Tham(Student):
 
     def stock(self, code: str):
         try:
-            # Tạo socket và kết nối đến server
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((self.ip(), 99))
             print("Kết nối đến server thành công.")
 
-            # Gửi yêu cầu, thêm ký tự kết thúc dòng để server dễ xử lý
             request = f"STOCK {code}\n"
             client_socket.sendall(request.encode('ascii'))
 
-            # Nhận phản hồi từ server
             response = client_socket.recv(1024).decode('ascii')
             try:
-                response_data = json.loads(response)  # Giải mã JSON từ phản hồi
+                response_data = json.loads(response)
                 if "error" in response_data:
                     print(f"Lỗi từ server: {response_data['error']}")
                     return response_data['error']
@@ -55,6 +52,28 @@ class Tham(Student):
             client_socket.close()
         return {"stock_code": code, "tc_price": ""}
 
+    def weather(self):
+        API_KEY = "83e847ddd998ae0b2d451f688f791fa9"  # Thay bằng API Key từ OpenWeatherMap
+        CITY = "Dong Hoi, VN"
+        URL = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric&lang=vi"
 
-#student = Tham()  # Tạo đối tượng Tham
-#student.stock("FPT")  # Gọi hàm stock với mã chứng khoán
+        try:
+            response = requests.get(URL)
+            data = response.json()
+
+            if response.status_code == 200:
+                temp = data["main"]["temp"]
+                weather_description = data["weather"][0]["description"]
+                humidity = data["main"]["humidity"]
+                wind_speed = data["wind"]["speed"]
+
+                return f"🌤️ Thời tiết tại {CITY}:\n🌡️ Nhiệt độ: {temp}°C\n☁️ Trạng thái: {weather_description.capitalize()}\n💧 Độ ẩm: {humidity}%\n🌬️ Gió: {wind_speed} m/s"
+            else:
+                return f"Không thể lấy dữ liệu thời tiết. Lỗi: {data.get('message', 'Không rõ lỗi')}"
+        except Exception as e:
+            return f"Lỗi khi lấy dữ liệu thời tiết: {str(e)}"
+
+
+# Test phương thức weather()
+#student = Tham()
+#print(student.weather())
