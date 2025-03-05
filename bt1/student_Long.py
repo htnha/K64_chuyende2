@@ -81,13 +81,13 @@ class Long(Student):
         finally:
             client_socket.close()
 
-# Tạo đối tượng Long và gọi hàm stock và weather
-student = Long()
+# # Tạo đối tượng Long và gọi hàm stock và weather
+# student = Long()
 
-# # Gọi hàm stock với mã chứng khoán
-# stock_code = input("Nhập mã chứng khoán để kiểm tra: ")
-# student.stock(stock_code)  # Gọi hàm stock với mã chứng khoán
+# # # Gọi hàm stock với mã chứng khoán
+# # stock_code = input("Nhập mã chứng khoán để kiểm tra: ")
+# # student.stock(stock_code)  # Gọi hàm stock với mã chứng khoán
 
-# Gọi hàm weather với tên thành phố
-city = input("Nhập tên thành phố để lấy thông tin thời tiết: ")
-student.weather(city)  # Gọi hàm weather với tên thành phố
+# # Gọi hàm weather với tên thành phố
+# city = input("Nhập tên thành phố để lấy thông tin thời tiết: ")
+# student.weather(city)  # Gọi hàm weather với tên thành phố
