@@ -11,6 +11,10 @@ class Phone(Student):
         return "6675229980"
     def ip(self):
         return "20.0.0.204"
+    def stock(self, code):
+        raise NotImplementedError("")
+    def weather(self, city):
+        raise NotImplementedError("")
 
 
 
