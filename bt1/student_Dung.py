@@ -43,50 +43,53 @@ class Dung(Student):
         finally:
             client_socket.close()
 
-    # def weather(self, city):
-    #     try:
-    #         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #         client_socket.connect((self.ip(), 99))  # Đổi sang cổng 99
-    #         print("Kết nối đến server thời tiết thành công.")
-
-    #         request = f"WEATHER {city}\n"
-    #         client_socket.sendall(request.encode('utf-8'))
-
-    #         response = client_socket.recv(4096).decode('utf-8')
-    #         try:
-    #             weather_data = json.loads(response)
-    #             if "error" in weather_data:
-    #                 print(f"Lỗi từ server: {weather_data['error']}")
-    #                 return weather_data['error']
-    #             else:
-    #                 print(f"Thời tiết tại {city}: {weather_data['weather']}")
-    #                 print(f"Nhiệt độ: {weather_data['temperature']}°C")
-    #                 print(f"Độ ẩm: {weather_data['humidity']}%")
-    #                 print(f"Gió: {weather_data['wind_speed']} m/s")
-    #                 return weather_data
-    #         except json.JSONDecodeError:
-    #             print(f"Phản hồi không hợp lệ từ server: {response}")
-    #     except ConnectionRefusedError:
-    #         print("Không thể kết nối đến server. Vui lòng kiểm tra địa chỉ và cổng.")
-    #     except Exception as e:
-    #         print(f"Lỗi: {e}")
-    #     finally:
-    #         client_socket.close()
     def weather(self, city):
         try:
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect((self.ip(), 99))
+            client_socket.connect((self.ip(), 99))  # Đổi sang cổng 99
+            print("Kết nối đến server thời tiết thành công.")
 
             request = f"WEATHER {city}\n"
             client_socket.sendall(request.encode('utf-8'))
 
             response = client_socket.recv(4096).decode('utf-8')
-            weather_data = json.loads(response)
-
+            try:
+                weather_data = json.loads(response)
+                if "error" in weather_data:
+                    print(f"Lỗi từ server: {weather_data['error']}")
+                    return weather_data['error']
+                else:
+                    print(f"Thời tiết tại {city}: {weather_data['weather']}")
+                    print(f"Nhiệt độ: {weather_data['temperature']}°C")
+                    print(f"Độ ẩm: {weather_data['humidity']}%")
+                    print(f"Gió: {weather_data['wind_speed']} m/s")
+                return(f"Thời tiết tại {city}: {weather_data['weather']}\n"
+                    f"Nhiệt độ: {weather_data['temperature']}°C"
+                    f"Độ ẩm: {weather_data['humidity']}%\n"
+                    f"Gió: {weather_data['wind_speed']} m/s")
+            except json.JSONDecodeError:
+                print(f"Phản hồi không hợp lệ từ server: {response}")
+        except ConnectionRefusedError:
+            print("Không thể kết nối đến server. Vui lòng kiểm tra địa chỉ và cổng.")
+        except Exception as e:
+            print(f"Lỗi: {e}")
+        finally:
             client_socket.close()
-            return weather_data  # Trả về dữ liệu thời tiết đầy đủ
-        except (ConnectionRefusedError, json.JSONDecodeError, Exception) as e:
-            return {"error": str(e)}
+    # def weather(self, city):
+    #     try:
+    #         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #         client_socket.connect((self.ip(), 99))
+
+    #         request = f"WEATHER {city}\n"
+    #         client_socket.sendall(request.encode('utf-8'))
+
+    #         response = client_socket.recv(4096).decode('utf-8')
+    #         weather_data = json.loads(response)
+
+    #         client_socket.close()
+    #         return weather_data  # Trả về dữ liệu thời tiết đầy đủ
+    #     except (ConnectionRefusedError, json.JSONDecodeError, Exception) as e:
+    #         return {"error": str(e)}
 
 
 
