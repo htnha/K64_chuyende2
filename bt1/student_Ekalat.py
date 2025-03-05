@@ -13,7 +13,7 @@ class Ekalat(Student):
         return "6079753756"
     def ip(self):
         # Thay đổi IP thành địa chỉ localhost vì server đang chạy trên máy local
-        return "192.168.1.50"  # hoặc "localhost"
+        return "20.0.0.65"  # hoặc "localhost"
     def weather(self, city):
         try:
             # Tạo socket và kết nối đến weather server
