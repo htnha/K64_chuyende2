@@ -16,7 +16,7 @@ class Long(Student):
         return "7028049001"
     
     def ip(self):
-        return "127.0.0.1"  # Đảm bảo sử dụng IP của server đang chạy, ở đây là localhost cho máy chủ cục bộ.
+        return "171.224.199.63"  # Đảm bảo sử dụng IP của server đang chạy, ở đây là localhost cho máy chủ cục bộ.
     
     def stock(self, code):
         try:
