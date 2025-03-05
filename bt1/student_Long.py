@@ -12,7 +12,7 @@ class Long(Student):
     def telegram_id(self):
         return "7028049001"
     def ip(self):
-        return "171.223.21.220"
+        return "171.224.194.141"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
@@ -44,6 +44,6 @@ class Long(Student):
         finally:
             client_socket.close()
 
-# # Tạo đối tượng Long và gọi hàm stock
+ # Tạo đối tượng Long và gọi hàm stock
 # student = Long()
 # student.stock("FPT")  # Gọi hàm send_request với mã chứng khoán 

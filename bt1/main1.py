@@ -25,8 +25,9 @@ students = {
 
 # Escape special characters for MarkdownV2
 def escape_markdown(text: str) -> str:
-    special_chars = r"_*[]()~`>#+-=|{}.!\\"
+    special_chars = r"_*[]()~>#+-=|{}.!\\"
     return "".join(f"\\{char}" if char in special_chars else char for char in text)
+
 
 # Start Command with Help Instructions
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -36,12 +37,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 You can interact with the following commands:
 
 /start \\- Display this help message.
-/student <name> \\- Get details about a specific student. Example: `/student Dung`
+/student <name> \\- Get details about a specific student. Example: /student Dung
 /list_students \\- List all available students.
 
 🔍 *Example Usage:*
-- `/student Dung`
-- `/student An`
+- /student Dung
+- /student An
 
 Type a command to begin!
 """)
@@ -55,15 +56,15 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
     - /student ABC speak
     - /student ABC stock VNM
     """
+    print(f"Received command: {context.args}")
     try:
         # Kiểm tra đủ tham số tối thiểu (tên sv và lệnh)
         if len(context.args) < 2:
             await update.message.reply_text("Cú pháp không đúng. Sử dụng: /student <Tên SV> <lệnh> [tham số...]")
             return
-        
+
         student_name = context.args[0]
         command = context.args[1].lower()
-        # Lấy các tham số còn lại nếu có
         params = context.args[2:] if len(context.args) > 2 else []
         
         # Kiểm tra sinh viên có trong danh sách không
@@ -78,13 +79,27 @@ async def handle_student_command(update: Update, context: ContextTypes.DEFAULT_T
             method = getattr(student, command)
             
             try:
-                # Gọi method với các tham số nếu có
-                if params:
-                    result = method(*params)
+                # Xử lý riêng cho stock
+                if command == "stock":
+                    if len(params) < 1:
+                        await update.message.reply_text(
+                            "Cú pháp không đúng. Sử dụng: /student <TênSV> stock <mã_chứng_khoán>")
+                        return
+                    result = method(params[0])  # Gọi stock với mã chứng khoán
                 else:
-                    result = method()
+                    # Gọi method với các tham số nếu có
+                    if params:
+                        result = method(*params)
+                    else:
+                        result = method()
+                
+                # Nếu trả về dict, định dạng lại tin nhắn
+                if isinstance(result, dict):
+                    message = f"Mã chứng khoán: {result['stock_code']}\nGiá tham chiếu: {result['tc_price']}"
+                else:
+                    message = str(result)
                     
-                await update.message.reply_text(result)
+                await update.message.reply_text(message)
             except TypeError as e:
                 # Xử lý lỗi số lượng tham số không đúng
                 await update.message.reply_text(f"Lỗi: Số lượng tham số không đúng cho lệnh {command}")
@@ -104,31 +119,31 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         # Lấy một instance của Student để kiểm tra các method có sẵn
         sample_student = students["Dung"]
-        
+
         # Lấy tất cả các method của class (không lấy các method bắt đầu bằng '_')
-        methods = [method for method in dir(sample_student) 
-                  if not method.startswith('_') and callable(getattr(sample_student, method))]
-        
+        methods = [method for method in dir(sample_student)
+                   if not method.startswith('_') and callable(getattr(sample_student, method))]
+
         # Tạo message help
         help_text = "📚 *Danh sách các lệnh có thể sử dụng:*\n\n"
-        help_text += "Cú pháp: `/student <tên_sv> <lệnh>`\n\n"
+        help_text += "Cú pháp: /student <tên_sv> <lệnh>\n\n"
         help_text += "*Các lệnh:*\n"
         for method in methods:
-            help_text += f"• `{method}` - Gọi phương thức {method} của sinh viên\n"
-        
+            help_text += f"• {method} - Gọi phương thức {method} của sinh viên\n"
+
         help_text += "\n*Ví dụ:*\n"
-        help_text += "• `/student Vu speak`\n"
-        help_text += "• `/student ABC name`\n\n"
-        
+        help_text += "• /student Vu speak\n"
+        help_text += "• /student ABC name\n\n"
+
         help_text += "*Danh sách sinh viên:*\n"
         for student_name in students.keys():
             help_text += f"• {student_name}\n"
-        
+
         # Escape các ký tự đặc biệt cho MarkdownV2
         help_text = escape_markdown(help_text)
-        
+
         await update.message.reply_text(help_text, parse_mode="MarkdownV2")
-        
+
     except Exception as e:
         await update.message.reply_text(f"Lỗi: {str(e)}")
 
@@ -155,4 +170,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

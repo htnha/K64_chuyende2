@@ -9,5 +9,5 @@ class Bounkham(Student):
         return "Savannakhet - Laos"
     def telegram_id(self) :
         return "8153376997"
-     def ip(self):
+    def ip(self):
         return "20.0.0.71"
