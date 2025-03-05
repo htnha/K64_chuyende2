@@ -16,4 +16,6 @@ class Student:
 
     def stock(self, code):
         raise NotImplementedError("Subclass must implement abstract method")
-
+    
+    def weather(self, city):
+        raise NotImplementedError("Subclass must implement abstract method")
