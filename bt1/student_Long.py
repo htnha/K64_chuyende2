@@ -40,6 +40,7 @@ class Long(Student):
                     print(f"Giá tham chiếu: {response_data['tc_price']}")
             except json.JSONDecodeError:
                 print(f"Phản hồi không hợp lệ từ server: {response}")
+                return(f"Phản hồi không hợp lệ từ server: {response}")
         except ConnectionRefusedError:
             print("Không thể kết nối đến server. Vui lòng kiểm tra địa chỉ và cổng.")
         except Exception as e:
@@ -63,8 +64,16 @@ class Long(Student):
                 response_data = json.loads(response)  # Giải mã JSON từ phản hồi
                 if "error" in response_data:
                     print(f"Lỗi từ server: {response_data['error']}")
+                    return(f"Lỗi từ server: {response_data['error']}")
                 else:
                     print(f"Thời tiết tại {response_data['city']}:\n"
+                        f"Nhiệt độ: {response_data['temperature']}°C\n"
+                        f"Cảm giác như: {response_data['feels_like']}°C\n"
+                        f"Độ ẩm: {response_data['humidity']}%\n"
+                        f"Mô tả: {response_data['description']}\n"
+                        f"Tốc độ gió: {response_data['wind_speed']} m/s\n"
+                        f"Lượng mưa (1 giờ): {response_data['rain']} mm")
+                    return(f"Thời tiết tại {response_data['city']}:\n"
                         f"Nhiệt độ: {response_data['temperature']}°C\n"
                         f"Cảm giác như: {response_data['feels_like']}°C\n"
                         f"Độ ẩm: {response_data['humidity']}%\n"
