@@ -16,7 +16,7 @@ class Tham(Student):
         return "6751406624"
 
     def ip(self):
-        return "20.0.0.237"
+        return "127.0.0.1"
 
     def stock(self, code: str):
         try:
