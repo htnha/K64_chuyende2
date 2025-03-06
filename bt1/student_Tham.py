@@ -1,4 +1,3 @@
-import requests
 import socket
 import json
 from Student import Student
@@ -52,28 +51,46 @@ class Tham(Student):
             client_socket.close()
         return {"stock_code": code, "tc_price": ""}
 
-    def weather(self, city):
-        API_KEY = "83e847ddd998ae0b2d451f688f791fa9"  # Thay bằng API Key từ OpenWeatherMap
-        CITY = "Dong Hoi, VN"
-        URL = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric&lang=vi"
-
+    def weather(self, city: str):
         try:
-            response = requests.get(URL)
-            data = response.json()
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect((self.ip(), 99))
+            print("Kết nối đến server thành công.")
 
-            if response.status_code == 200:
-                temp = data["main"]["temp"]
-                weather_description = data["weather"][0]["description"]
-                humidity = data["main"]["humidity"]
-                wind_speed = data["wind"]["speed"]
+            request = f"WEATHER {city}\n"
+            client_socket.sendall(request.encode('ascii'))
 
-                return f"🌤️ Thời tiết tại {CITY}:\n🌡️ Nhiệt độ: {temp}°C\n☁️ Trạng thái: {weather_description.capitalize()}\n💧 Độ ẩm: {humidity}%\n🌬️ Gió: {wind_speed} m/s"
-            else:
-                return f"Không thể lấy dữ liệu thời tiết. Lỗi: {data.get('message', 'Không rõ lỗi')}"
+            response = client_socket.recv(1024).decode('ascii')
+            try:
+                response_data = json.loads(response)
+                if "error" in response_data:
+                    print(f"Lỗi từ server: {response_data['error']}")
+                    return response_data['error']
+                else:
+                    print(f"🌤️ Thời tiết tại {response_data['city']}:")
+                    print(f"🌡️ Nhiệt độ: {response_data['temperature']}°C")
+                    print(f"☁️ Trạng thái: {response_data['weather'].capitalize()}")
+                    print(f"💧 Độ ẩm: {response_data['humidity']}%")
+                    print(f"🌬️ Gió: {response_data['wind_speed']}m/s")
+
+                    return {
+                        "city": response_data["city"],
+                        "temperature": response_data["temperature"],
+                        "humidity": response_data["humidity"],
+                        "weather": response_data["weather"],
+                        "wind_speed": response_data["wind_speed"]
+                    }
+            except json.JSONDecodeError:
+                print(f"Phản hồi không hợp lệ từ server: {response}")
+        except ConnectionRefusedError:
+            print("Không thể kết nối đến server. Vui lòng kiểm tra địa chỉ và cổng.")
         except Exception as e:
-            return f"Lỗi khi lấy dữ liệu thời tiết: {str(e)}"
+            print(f"Lỗi: {e}")
+        finally:
+            client_socket.close()
+        return {"city": city, "temperature": "", "humidity": "", "weather": "", "wind_speed": ""}
 
 
-# Test phương thức weather()
-#student = Tham()
-#print(student.weather("Dong Hoi, VN"))
+#student = Tham()  # Tạo đối tượng Tham và gọi hàm stock, weather
+#student.stock("FPT")  # Gọi hàm stock với mã chứng khoán
+#print(student.weather("Dong Hoi, VN"))  # gọi hàm weather với tên thành phố
