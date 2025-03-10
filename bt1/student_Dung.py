@@ -11,7 +11,7 @@ class Dung(Student):
     def telegram_id(self):
         return "6133213893"
     def ip(self):
-        return "20.0.0.109"
+        return "127.0.0.1"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
@@ -46,29 +46,18 @@ class Dung(Student):
     def weather(self, city):
         try:
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect((self.ip(), 99))  # Đổi sang cổng 99
+            client_socket.connect((self.ip(), 99))
             print("Kết nối đến server thời tiết thành công.")
 
             request = f"WEATHER {city}\n"
             client_socket.sendall(request.encode('utf-8'))
 
             response = client_socket.recv(4096).decode('utf-8')
-            try:
-                weather_data = json.loads(response)
-                if "error" in weather_data:
-                    print(f"Lỗi từ server: {weather_data['error']}")
-                    return weather_data['error']
-                else:
-                    print(f"Thời tiết tại {city}: {weather_data['weather']}")
-                    print(f"Nhiệt độ: {weather_data['temperature']}°C")
-                    print(f"Độ ẩm: {weather_data['humidity']}%")
-                    print(f"Gió: {weather_data['wind_speed']} m/s")
-                return(f"Thời tiết tại {city}: {weather_data['weather']}\n"
-                    f"Nhiệt độ: {weather_data['temperature']}°C"
-                    f"Độ ẩm: {weather_data['humidity']}%\n"
-                    f"Gió: {weather_data['wind_speed']} m/s")
-            except json.JSONDecodeError:
-                print(f"Phản hồi không hợp lệ từ server: {response}")
+            if response:
+                print(f"Thời tiết tại {city}: {response}")
+                return response
+            else:
+                return "❌ Không thể lấy dữ liệu thời tiết."
         except ConnectionRefusedError:
             print("Không thể kết nối đến server. Vui lòng kiểm tra địa chỉ và cổng.")
         except Exception as e:
@@ -90,6 +79,3 @@ class Dung(Student):
     #         return weather_data  # Trả về dữ liệu thời tiết đầy đủ
     #     except (ConnectionRefusedError, json.JSONDecodeError, Exception) as e:
     #         return {"error": str(e)}
-
-
-
