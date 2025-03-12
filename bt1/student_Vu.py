@@ -11,7 +11,7 @@ class Vu(Student):
     def telegram_id(self):
         return "8133457378"
     def ip(self):
-        return "127.0.0.1"
+        return "172.26.160.1"
     
 
     def stock(self, code):
