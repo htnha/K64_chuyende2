@@ -11,7 +11,7 @@ class Dung(Student):
     def telegram_id(self):
         return "6133213893"
     def ip(self):
-        return "127.0.0.1"
+        return "20.0.0.35"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
