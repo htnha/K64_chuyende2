@@ -11,7 +11,7 @@ class Dung(Student):
     def telegram_id(self):
         return "6133213893"
     def ip(self):
-        return "20.0.0.35"
+        return "172.16.0.2"
     def stock(self, code):
         try:
             # Tạo socket và kết nối đến server
@@ -79,3 +79,6 @@ class Dung(Student):
     #         return weather_data  # Trả về dữ liệu thời tiết đầy đủ
     #     except (ConnectionRefusedError, json.JSONDecodeError, Exception) as e:
     #         return {"error": str(e)}
+
+
+
